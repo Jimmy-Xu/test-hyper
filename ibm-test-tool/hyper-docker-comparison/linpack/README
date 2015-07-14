@@ -1,0 +1,8 @@
+This is Intel-optimized Linpack version 11.1.2.005 from
+http://software.intel.com/en-us/articles/intel-math-kernel-library-linpack-download
+
+VM
+    ./vm.sh
+
+Docker
+    docker build -t linpack .

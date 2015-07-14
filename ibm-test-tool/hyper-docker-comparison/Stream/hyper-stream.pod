@@ -1,0 +1,21 @@
+{
+  "tty": true,
+  "volumes": [],
+  "files": [],
+  "resource": {
+    "memory": 512,
+    "vcpu": 1
+  },
+  "containers": [
+    {
+      "command": [
+        "/bin/bash"
+      ],
+      "workdir": "/",
+      "image": "hyper:stream",
+      "name": "hyper-stream"
+    }
+  ],
+  "id": "hyper-stream"
+}
+

@@ -1,0 +1,68 @@
+
+FAQ1: default 'network' invalid
+	$sudo virsh create virsh.xml
+	error: Failed to create domain from virsh.xml
+	error: Requested operation is not valid: network 'default' is not active
+
+Solution:
+	sudo virsh net-destroy default
+	sudo virsh net-start default
+
+
+------------------------------------------------
+FAQ2:
+	$sudo virsh create virsh.xml
+	error: Failed to create domain from virsh.xml
+	error: unsupported configuration: Unable to find security driver for label apparmor
+
+Solution:
+   Comment the following node in vish.xml
+   <seclabel type='dynamic' model='apparmor' relabel='yes'>
+     <label>libvirt-72bfeaf4-ab92-4798-a055-d722b2d3222b</label>
+     <imagelabel>libvirt-72bfeaf4-ab92-4798-a055-d722b2d3222b</imagelabel>
+   </seclabel>
+
+
+------------------------------------------------
+FAQ3:
+	$sudo virsh create virsh.xml
+	error: Failed to create domain from virsh.xml
+	error: Cannot access storage file '../common/vm/seed.img' (as uid:115, gid:125): No such file or directory
+
+Solution:
+	use absolute path of image
+	<source file='/home/xjimmy/hyper-tool/test/ibm-test-tool/hyper-docker-comparison/common/vm/seed.img'/>
+
+------------------------------------------------
+FAQ4:
+	sudo virsh create virsh.xml
+	error: Failed to create domain from virsh.xml
+	error: Cannot access storage file '/home/xjimmy/hyper-tool/test/ibm-test-tool/hyper-docker-comparison/netperf/netperf.qcow' (as uid:115, gid:125): Permission denied
+
+	occur: When image not under /var/lib/libvirt/images
+
+Solution:
+	sudo vi /etc/libvirt/qemu.conf
+	user = "root"
+	group = "root"
+
+	sudo service libvirtd restart
+
+------------------------------------------------
+FAQ5:
+	$sudo virsh  create virsh.xml
+	error: Failed to create domain from virsh.xml
+	error: Cannot get interface MTU on 'spyre': No such device
+
+Solution:
+	modify virsh.xml, change <source bridge='spyre'/> to <source bridge='virbr0'/>
+
+------------------------------------------------
+FAQ6:
+	$sudo virsh  create virsh.xml 
+	error: Failed to create domain from virsh.xml
+	error: internal error: process exited while connecting to monitor: 2015-07-11T07:56:33.159083Z qemu-system-x86_64: -drive file=/home/xjimmy/hyper-tool/test/ibm-test-tool/hyper-docker-comparison/netperf/netperf.qcow,if=none,id=drive-virtio-disk0,format=qcow2: could not open disk image /home/xjimmy/hyper-tool/test/ibm-test-tool/hyper-docker-comparison/netperf/netperf.qcow: Could not open '/home/xjimmy/hyper-tool/test/ibm-test-tool/hyper-docker-comparison/netperf/netperf.qcow': Permission denied
+
+
+Solution:
+	put image to /var/lib/libvirt/images/

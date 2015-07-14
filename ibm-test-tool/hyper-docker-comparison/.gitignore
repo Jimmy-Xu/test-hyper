@@ -1,0 +1,7 @@
+*.o
+*~
+._*
+.vagrant
+common/vm/cloud-utils-0.27
+*.img
+*.log

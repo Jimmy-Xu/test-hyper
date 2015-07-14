@@ -1,0 +1,25 @@
+{
+  "tty": true,
+  "volumes": [{
+                "volume": "/mnt/data",
+                "path": "/mnt/data",
+                "readOnly": false
+             }],
+  "files": [],
+  "resource": {
+    "memory": 4096,
+    "vcpu": 1
+  },
+  "containers": [
+    {
+      "command": [
+        "fio"
+      ],
+      "workdir": "/",
+      "image": "fio",
+      "name": "fio"
+    }
+  ],
+  "id": "hyper-fio"
+}
+

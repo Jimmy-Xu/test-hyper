@@ -1,0 +1,21 @@
+ ########################################################
+
+  Assembler CPUID and RDTSC       
+  CPU Cortex A8, Features Code 00000000, Model Code 00000000 
+    
+  Measured - Minimum 1000 MHz, Maximum 1000 MHz 
+  Linux Functions 
+  get_nprocs() - CPUs 8, Configured CPUs 8 
+  get_phys_pages() and size - RAM Size 15.63 GB, Page Size 4096 Bytes 
+  uname() - Linux, hyper-test-jimmy.local.lan, 3.13.0-55-generic 
+  #94-Ubuntu SMP Thu Jun 18 00:27:10 UTC 2015, x86_64 
+
+ ########################################################
+
+ Linpack Double Precision Unrolled Benchmark n @ 100
+ Optimisation Opt 3 64 Bit, Thu Jul  2 06:45:45 2015
+
+ Speed    4074.97 MFLOPS
+
+ Numeric results were as expected
+

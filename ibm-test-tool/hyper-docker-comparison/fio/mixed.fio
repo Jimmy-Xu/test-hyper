@@ -1,0 +1,16 @@
+[global]
+ioengine=libaio
+direct=1
+size=16g
+group_reporting
+thread
+filename=/mnt/data/fio-test-file
+
+[mixed-random-rw-32x8]
+stonewall
+rw=randrw
+rwmixread=70
+bs=4K
+iodepth=32
+numjobs=8
+runtime=60
