@@ -1,8 +1,8 @@
 fork from https://github.com/thewmf/kvm-docker-comparison
+===========================================================
 
-######################################################
 # Prepare
-######################################################
+```
 cd common/vm
 make
 
@@ -21,12 +21,11 @@ docker images
 #will create a kvm image(for kvm): vm.img under Stream dir
 ll vm.img
 	-rw------- 1 xjimmy xjimmy 493813760 Jul  8 22:09 vm.img
+```
 
-
-######################################################
 # manual operate host
-######################################################
 
+```
 1) bin/stream.exe
 Type 1:
 	Function      Rate (GB/s)   Avg time     Min time     Max time
@@ -55,14 +54,11 @@ Type 3:
 	Scale:         13.7903       0.1193       0.1188       0.1198
 	Add:           15.1725       0.1627       0.1620       0.1645
 	Triad:         15.0009       0.1643       0.1638       0.1648
+```
 
 
-
-
-######################################################
 # manual operate docker
-######################################################
-
+```
 1) docker run --memory=4096m --cpuset-cpus=0 --rm stream:latest /stream.exe
 Type 1:
 	Function      Rate (GB/s)   Avg time     Min time     Max time
@@ -93,7 +89,6 @@ Type 3:
 	Triad:         14.9411       0.1651       0.1645       0.1659
 
 
-
 3) numactl --physcpubind=0 --localalloc docker run --memory=4096m --cpuset-cpus=0 --rm stream:latest
 Type 1:
 	Function      Rate (GB/s)   Avg time     Min time     Max time
@@ -122,14 +117,12 @@ Type 3:
 	Scale:         13.7896       0.1192       0.1188       0.1196
 	Add:           15.1588       0.1627       0.1621       0.1633
 	Triad:         14.9605       0.1648       0.1643       0.1655
+```
 
 
 
-
-######################################################
 # manual operate hyper
-######################################################
-
+```
 sudo hyper run --cpu=1 --memory=4096 stream:latest /stream.exe
 Type 1:
 	Function      Rate (GB/s)   Avg time     Min time     Max time
@@ -190,9 +183,8 @@ Type 3:
 	Triad:         14.7792       0.1687       0.1663       0.1719
 
 
-
-
 ## test min bootable startup mem
+
 sudo hyper run --cpu=1 --memory=28 ubuntu  top -b -n1
 	POD id is pod-PdDPRppTte
 	top - 09:07:48 up 0 min,  0 users,  load average: 0.00, 0.00, 0.00
@@ -209,13 +201,12 @@ do
 	sudo hyper exec $i uptime
 	idx=$((idx+1))
 done
+```
 
 
 
-######################################################
 # manual operate VM
-######################################################
-
+```
 cd Stream
 
 ## run VM
@@ -236,8 +227,6 @@ numactl --physcpubind=0 --localalloc ./stream.exe
 
 ## shut down the VM
 ssh -p${PORT} $SSHOPTS spyre@localhost sudo shutdown -h now
-
-----------------------------------------------------------
 
 ## test min bootable startup mem
 
@@ -264,8 +253,6 @@ ssh -p${PORT} $SSHOPTS cirros@localhost "chmod 400 ~/.ssh/{authorized_keys,id_rs
 
 ssh -p${PORT} $SSHOPTS cirros@localhost dmesg
 
-
--------------------------------------------------------------------
 
 1) cp vm.img vm-test.img; sudo kvm -net nic -net user -hda vm-test.img -hdb ../common/vm/seed.img -m 4G -smp 1 -nographic -redir :2222::22
 
@@ -332,8 +319,6 @@ Type 3:
 	Triad:         14.8206       0.0681       0.0679       0.0684
 
 
-#######################################################################
-
 rm tmp* -rf
 #------------------------------------
 # bulk create VM
@@ -373,9 +358,6 @@ do
 	sleep 1
 done
 
-
-
-
 -- result ---------------------------------------------
 
 each vm: 1cpu + 512MB
@@ -402,12 +384,11 @@ create vm(tmp3vy.img):106
 Cannot set up guest memory 'pc.ram': Cannot allocate memory
 
 16GB => 105 vm
-
-######################################################
-# ---------------- hyper ----------------------------#
-######################################################
+```
 
 
+# hyper #
+```
 sudo hyper list pod | grep hyper-stream | grep -v "pod-.*running" | awk '{print $1}' | xargs -i sudo hyper stop {}
 sudo hyper list pod | grep hyper-stream | grep -v "pod-.*running" | awk '{print $1}' | xargs -i sudo hyper rm {}
 sudo hyper list | grep hyper-stream | grep running | wc -l
@@ -449,4 +430,4 @@ done
 
 $ sudo hyper pod hyper-stream.pod
 hyper ERROR: An error occurred trying to connect: Post http:///var/run/hyper.sock/v0.2.1/pod/run?podArgs=%7B%0A++%22tty%22%3A+true%2C%0A++%22volumes%22%3A+%5B%5D%2C%0A++%22files%22%3A+%5B%5D%2C%0A++%22resource%22%3A+%7B%0A++++%22memory%22%3A+512%2C%0A++++%22vcpu%22%3A+1%0A++%7D%2C%0A++%22containers%22%3A+%5B%0A++++%7B%0A++++++%22command%22%3A+%5B%0A++++++++%22%2Fbin%2Fbash%22%0A++++++%5D%2C%0A++++++%22workdir%22%3A+%22%2F%22%2C%0A++++++%22image%22%3A+%22hyper%3Astream%22%2C%0A++++++%22name%22%3A+%22hyper-stream%22%0A++++%7D%0A++%5D%2C%0A++%22id%22%3A+%22hyper-stream%22%0A%7D%0A%0A: EOF
-
+```
